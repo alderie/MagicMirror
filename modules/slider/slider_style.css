@@ -5,15 +5,35 @@
     transition:all 0.1s;
 }
 .drag-container {
-    padding:8px;
+    padding: 8px;
     height:300px;
     border:solid 2px white;
 }
 .drag-label {
+    pointer-events: none;
+    opacity:0;
     width:70px;
     position:absolute;
-    left:0px;
+    left:80px;
     text-align:center;
     padding:8px;
     font-family:'Montserrat';
+    transition:all 0.1s;
+}
+
+.dragging ~ .drag-label {
+    opacity:1;
+    left:120px;
+    margin-top:22px;
+}
+
+.dragging ~ .drag-label::after {
+    top:50%;
+    transform: translate(0,-50%);
+    content:"";
+    position:absolute;
+    left:-30px;
+    width:40px;
+    height:2px;
+    background-color:white;
 }
