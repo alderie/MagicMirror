@@ -4,9 +4,9 @@ Module.register("menu", {
 
 	// Default module config.
 	defaults: {
-		updateInterval: 1000 * 60,  //Minute Update Interval
 		open:false,
-		menuItems: [
+		activeModule: 'calendar', //Module active by default
+		menuItems: [ //List of modules with their display name and their module name
 			{
 				name: 'Calendar',
 				module: 'calendar' 
@@ -18,12 +18,15 @@ Module.register("menu", {
 			{
 				name: 'Media',
 				module: 'media' 
+			}, {
+				name: 'Test',
+				module: 'menu_test'
 			}
 		]
 	},
 
 	getScripts: function () {
-		return [this.file("hammer.min.js")];
+		return [];//return [this.file("hammer.min.js")];
 	},
 
 	// Define required scripts.
@@ -33,13 +36,6 @@ Module.register("menu", {
 
 	start: function () {
 		Log.info("Starting module: " + this.name);
-
-		//TODO: TIMING
-
-		//setInterval(function() {
-		//	self.updateDom(self.config.fadeSpeed);
-		//}, this.config.updateInterval);
-
 	},
 
 	toggleClass(controller,state){
@@ -70,14 +66,24 @@ Module.register("menu", {
 		menuLabel.classList.add('menu-label');
 
 		for(let item of this.config.menuItems) {
+
 			let menuItem = document.createElement("div");
 			menuItem.classList.add("menu-item");
 			menuItem.textContent = item.name;
+
+			if(item.module==this.config.activeModule)
+				menuItem.classList.add('pressed');
+
 			menuItem.addEventListener('touchstart', (evt)=>{
 
 				for(let subItem of menuItems)
 					subItem.classList.remove('pressed');
 				
+				if(item.module!=this.config.activeModule) {
+					this.sendNotification('MENU_SWITCH', {
+						module: item.module
+					});
+				}
 
 				menuItem.classList.add('pressed');
 			});
@@ -86,6 +92,11 @@ Module.register("menu", {
 
 			menu.appendChild(menuItem);
 		}
+
+		//Enable active module by default
+		this.sendNotification('MENU_SWITCH', {
+			module: this.config.activeModule
+		});
 
 		controller.classList.add('controller');
 		
