@@ -5,11 +5,11 @@ Module.register("menu", {
 	// Default module config.
 	defaults: {
 		open:false,
-		activeModule: 'calendar', //Module active by default
+		activeModule: 'slider', //Module active by default
 		menuItems: [ //List of modules with their display name and their module name
 			{
-				name: 'Calendar',
-				module: 'calendar' 
+				name: 'Slider',
+				module: 'slider' 
 			},
 			{
 				name: 'Lights',
@@ -20,7 +20,7 @@ Module.register("menu", {
 				module: 'media' 
 			}, {
 				name: 'Test',
-				module: 'menu_test'
+				module: 'menu_sample'
 			}
 		]
 	},
@@ -80,6 +80,7 @@ Module.register("menu", {
 					subItem.classList.remove('pressed');
 				
 				if(item.module!=this.config.activeModule) {
+					this.config.activeModule = item.module;
 					this.sendNotification('MENU_SWITCH', {
 						module: item.module
 					});
@@ -92,11 +93,6 @@ Module.register("menu", {
 
 			menu.appendChild(menuItem);
 		}
-
-		//Enable active module by default
-		this.sendNotification('MENU_SWITCH', {
-			module: this.config.activeModule
-		});
 
 		controller.classList.add('controller');
 		
@@ -116,6 +112,13 @@ Module.register("menu", {
 		return wrapper;
 	},
 
-	notificationReceived: function () {},
+	notificationReceived: function (evt) {
+		if(evt=="MODULE_DOM_CREATED"){
+			//Enable active module by default
+			this.sendNotification('MENU_SWITCH', {
+				module: this.config.activeModule
+			});
+		}
+	},
 	socketNotificationReceived: function () {},
 });

@@ -23,9 +23,9 @@ Module.register("menu_sample", {
 		if(evt=="MENU_SWITCH") {
 			if(data.module==this.name) {
 				Log.info("Selected " + this.name + " module!");
-				this.show(300);
+				this.show(500);
 			} else {
-				this.hide(300);
+				this.hide(0);
 			}
 		}
 
