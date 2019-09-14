@@ -5,11 +5,11 @@ Module.register("menu", {
 	// Default module config.
 	defaults: {
 		open:false,
-		activeModule: 'slider', //Module active by default
+		activeModule: 'weather', //Module active by default
 		menuItems: [ //List of modules with their display name and their module name
 			{
-				name: 'Slider',
-				module: 'slider' 
+				name: 'Weather',
+				module: 'weather' 
 			},
 			{
 				name: 'Lights',
@@ -19,8 +19,8 @@ Module.register("menu", {
 				name: 'Media',
 				module: 'media' 
 			}, {
-				name: 'Test',
-				module: 'menu_sample'
+				name: 'Slider',
+				module: 'slider'
 			}
 		]
 	},
