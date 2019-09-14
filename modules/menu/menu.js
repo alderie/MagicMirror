@@ -5,11 +5,11 @@ Module.register("menu", {
 	// Default module config.
 	defaults: {
 		open:false,
-		activeModule: 'weather', //Module active by default
+		activeModule: 'menu_weather', //Module active by default
 		menuItems: [ //List of modules with their display name and their module name
 			{
 				name: 'Weather',
-				module: 'weather' 
+				module: 'menu_weather' 
 			},
 			{
 				name: 'Lights',
