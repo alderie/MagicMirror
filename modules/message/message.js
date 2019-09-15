@@ -19,8 +19,8 @@ Module.register("message",{
         Log.info("Starting module: " + this.name);
         //TODO: TIMING
         
-        setInterval(function() {
-			self.updateDom(self.config.fadeSpeed);
+        setInterval(()=>{
+			this.updateDom(this.config.fadeSpeed);
         }, this.config.updateInterval);
         
     },

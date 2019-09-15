@@ -9,7 +9,7 @@ Module.register("menu_weather", {
 			"01d": "day_sunny",
 			"02d": "day_cloudy",
 			"03d": "cloudy",
-			"04d": "cloudy_windy",
+			"04d": "cloudy", //cloudy_windy
 			"09d": "showers",
 			"10d": "rain",
 			"11d": "thunderstorm",
@@ -19,10 +19,10 @@ Module.register("menu_weather", {
 			"02n": "cloudy",
 			"03n": "cloudy",
 			"04n": "cloudy",
-			"09n": "night_showers",
-			"10n": "night_rain",
-			"11n": "night_thunderstorm",
-			"13n": "night_snow",
+			"09n": "showers",
+			"10n": "rain",
+			"11n": "thunderstorm",
+			"13n": "snow",
 			"50n": "night_alt_cloudy_windy"
 		},
 		rateLimit: 1500,
@@ -118,6 +118,7 @@ Module.register("menu_weather", {
 			//Map weather data into something readable
 			weatherForecast = weatherForecast.map(data=>{
 				return {
+					time: data.dt_txt,
 					temp: {
 						current: this.kelvinToFarenheit(data.main.temp),
 						min: this.kelvinToFarenheit(data.main.temp_min),
@@ -138,16 +139,13 @@ Module.register("menu_weather", {
 			
 		}).then((weather)=>{
 
-			let locationName = document.createElement("div");
-			locationName.classList.add('location');
-			locationName.textContent = weather.cityInfo.name;
-
 			let weatherBox = document.createElement("div");
 			weatherBox.classList.add('weather_wrapper');
 
-			wrapper.appendChild(locationName);
+			let i = 0;
 
 			for(let item of weather.weatherForecast) {
+				i++;
 
 				let weatherBlock = document.createElement("div");
 				weatherBlock.classList.add('weather');
@@ -165,15 +163,15 @@ Module.register("menu_weather", {
 				
 				let currentTemp = document.createElement("p");
 				currentTemp.classList.add('current');
-				currentTemp.textContent = item.temp.current + " F";
+				currentTemp.textContent = item.temp.current + "°F";
 
 				let minTemp = document.createElement("p");
 				minTemp.classList.add('min');
-				minTemp.textContent = item.temp.min + " F";
+				minTemp.textContent = item.temp.min + "°F";
 
 				let maxTemp = document.createElement("p");
 				maxTemp.classList.add('max');
-				maxTemp.textContent = item.temp.max + " F";
+				maxTemp.textContent = item.temp.max + "°F";
 
 				tempBlock.appendChild(currentTemp);
 				tempBlock.appendChild(minTemp);
@@ -183,11 +181,25 @@ Module.register("menu_weather", {
 				weatherBlock.appendChild(weatherDesc);
 				weatherBlock.appendChild(tempBlock);
 
+				//Add class for today
+				if(i==1) {
+					weatherBlock.classList.add('current_weather');
+				}
+
 				weatherBox.appendChild(weatherBlock);
+
+
 
 			}
 
 			wrapper.appendChild(weatherBox);
+
+			let locationName = document.createElement("div");
+			locationName.classList.add('location');
+			locationName.textContent = weather.cityInfo.name;
+			wrapper.appendChild(locationName);
+
+			
 			
 		});
 

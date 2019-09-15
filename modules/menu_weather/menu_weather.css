@@ -2,12 +2,57 @@
 .weather_wrapper {
 	display:flex;
 	flex-flow:row;
-}
-.weather {
-	color:red;
+	align-items: center;
 }
 
+.location {
+	margin-bottom:20px;
+	padding:20px;
+	font-family:'Montserrat';
+	font-size:28px;
+}
+
+.weather {
+	color:white;
+	width:200px;
+	padding:20px 40px;
+	padding-top:60px;
+	font-family:'Montserrat';
+	font-weight:normal;
+	margin-right:20px;
+}
+
+.weather .desc {
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing:2px;
+	font-size:18px;
+}
+
+.weather .icon {
+	margin-left:50%;
+	transform:translate(-50%);
+	height:100px;
+}
+.weather.current_weather {
+	border:solid 2px white;
+}
 .temperature {
 	display:flex;
 	flex-flow:row;
+}
+
+.temperature .current {
+	font-size:24px;
+	margin:8px;
+}
+
+.temperature .min, .temperature .max {
+	margin:8px;
+	font-size:16px;
+	color:grey;
+}
+
+.min {
+	margin-left:auto;
 }
